@@ -259,11 +259,11 @@ textarea {
     transform: rotate(360deg);
   }
 }
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
   .message-avatar--loading {
     animation: none;
   }
-}
+} */
 .message-meta {
   display: flex;
   align-items: center;
