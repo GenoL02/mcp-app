@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  base: "/mcp-app",
   server: {
     proxy: {
       "/mcp": {
@@ -12,5 +13,4 @@ export default defineConfig({
       },
     },
   },
-  base: "/mcp-app",
 });
