@@ -56,11 +56,11 @@ export function useChat() {
                 : m,
             ),
           ),
-        () => setIsStreaming(false),
+        () => setIsStreaming(true),
       );
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
-      setIsStreaming(false);
+      setIsStreaming(true);
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantId
