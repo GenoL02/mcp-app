@@ -35,6 +35,11 @@ export function AssistantMessage({
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {message.content}
           </ReactMarkdown>
+          <div className="message-tokens">
+            {message.totalTokens !== undefined && (
+              <span>{message.totalTokens} tokens</span>
+            )}
+          </div>
         </div>
       </div>
     </div>
