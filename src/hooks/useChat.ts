@@ -56,7 +56,7 @@ export function useChat() {
                 : m,
             ),
           ),
-        () => setIsStreaming(true),
+        () => setIsStreaming(false),
       );
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
