@@ -16,16 +16,15 @@ export function useChat() {
     setError(null);
   }
 
-  async function submit(context: ContextItem[]) {
-    const text = input.trim();
+  async function sendQuestion(text: string, context: ContextItem[]) {
     if (!text || isStreaming) return;
-    setInput("");
     setError(null);
     const user: Message = {
       id: crypto.randomUUID(),
       role: "user",
       content: text,
       createdAt: Date.now(),
+      context,
     };
     const assistantId = crypto.randomUUID();
     setMessages((prev) => [
@@ -88,6 +87,17 @@ export function useChat() {
     }
   }
 
+  async function submit(context: ContextItem[]) {
+    const text = input.trim();
+    if (!text || isStreaming) return;
+    setInput("");
+    await sendQuestion(text, context);
+  }
+
+  async function resend(text: string, context: ContextItem[]) {
+    await sendQuestion(text.trim(), context);
+  }
+
   function stop() {
     requestController.current?.abort();
   }
@@ -99,6 +109,7 @@ export function useChat() {
     isStreaming,
     error,
     submit,
+    resend,
     stop,
     resetChat,
   };

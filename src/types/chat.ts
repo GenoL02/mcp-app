@@ -24,6 +24,7 @@ export type Message = {
   role: Role;
   content: string;
   createdAt: number;
+  context?: ContextItem[];
   tools?: ToolState[];
   steps?: ChatStep[];
   totalTokens?: number;

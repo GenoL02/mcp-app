@@ -22,13 +22,13 @@ export function ToolStep({ step }: ToolStepProps) {
         className="tool-step-header"
         onClick={() => setExpanded((value) => !value)}
       >
-        <span className="tool-status">✓</span>
+        <span className="tool-status"> ✓ </span>
 
         <span className="tool-name">{step.tool_name}</span>
 
-        <span className="tool-turn">Turn {step.turn}</span>
+        <span className="tool-turn"> Turn {step.turn}</span>
 
-        <span className="tool-chevron">{expanded ? "⌃" : "⌄"}</span>
+        <span className="tool-chevron">{expanded ? " ⌃ " : " ⌄ "}</span>
       </button>
 
       {expanded && (

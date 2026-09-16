@@ -78,7 +78,16 @@ export default function App() {
           <NcpStatus />
         </header>
         <section className="chat-area">
-          <MessageList messages={messages} isStreaming={chat.isStreaming} />
+          <MessageList
+            messages={messages}
+            isStreaming={chat.isStreaming}
+            onResend={(message) =>
+              chat.resend(
+                message.content,
+                message.context ?? files.filter((f) => selected.includes(f.id)),
+              )
+            }
+          />
           {chat.error && <div className="error">{chat.error}</div>}
           <ChatInput
             value={chat.input}
