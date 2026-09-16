@@ -86,6 +86,7 @@ export default function App() {
             onSubmit={() =>
               chat.submit(files.filter((f) => selected.includes(f.id)))
             }
+            onStop={chat.stop}
             isStreaming={chat.isStreaming}
             context={files.filter((f) => selected.includes(f.id))}
           />

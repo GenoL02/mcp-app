@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import type { ContextItem, Message } from "../types/chat";
 import { sendChat } from "../api/client";
 
@@ -7,6 +7,7 @@ export function useChat() {
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const requestController = useRef<AbortController | null>(null);
   const sessionId = useMemo(() => "session-local", []);
 
   function resetChat() {
@@ -38,6 +39,8 @@ export function useChat() {
       },
     ]);
     setIsStreaming(true);
+    const controller = new AbortController();
+    requestController.current = controller;
     try {
       await sendChat(
         sessionId,
@@ -57,10 +60,20 @@ export function useChat() {
             ),
           ),
         () => setIsStreaming(false),
+        controller.signal,
       );
     } catch (e) {
+      if (e instanceof DOMException && e.name === "AbortError") {
+        setIsStreaming(false);
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantId ? { ...m, content: "Đã hủy yêu cầu." } : m,
+          ),
+        );
+        return;
+      }
       setError(e instanceof Error ? e.message : "Unknown error");
-      setIsStreaming(true);
+      setIsStreaming(false);
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantId
@@ -68,7 +81,25 @@ export function useChat() {
             : m,
         ),
       );
+    } finally {
+      if (requestController.current === controller) {
+        requestController.current = null;
+      }
     }
   }
-  return { messages, input, setInput, isStreaming, error, submit, resetChat };
+
+  function stop() {
+    requestController.current?.abort();
+  }
+
+  return {
+    messages,
+    input,
+    setInput,
+    isStreaming,
+    error,
+    submit,
+    stop,
+    resetChat,
+  };
 }

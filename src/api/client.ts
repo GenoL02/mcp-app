@@ -23,11 +23,13 @@ export async function sendChat(
   context: ContextItem[],
   onResponse: (response: ChatResponse) => void,
   onDone: () => void,
+  signal?: AbortSignal,
 ): Promise<void> {
   const response = await fetch(API_BASE_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt }),
+    signal,
   });
   if (!response.ok) throw new Error("Chat request failed");
 

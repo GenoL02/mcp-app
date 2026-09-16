@@ -516,6 +516,19 @@ textarea {
   font-style: normal;
   color: #66707e;
 }
+.tool-step-content,
+.tool-section {
+  min-width: 0;
+  max-width: 100%;
+}
+.tool-step-content pre {
+  max-width: 100%;
+  margin: 0;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 .error {
   margin: 0 auto 8px;
   max-width: 820px;

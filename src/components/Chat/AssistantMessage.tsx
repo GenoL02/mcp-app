@@ -37,7 +37,7 @@ export function AssistantMessage({
           </ReactMarkdown>
           <div className="message-tokens">
             {message.totalTokens !== undefined && (
-              <span>{message.totalTokens} tokens</span>
+              <span>Token tiêu thụ: {message.totalTokens} tokens</span>
             )}
           </div>
         </div>
